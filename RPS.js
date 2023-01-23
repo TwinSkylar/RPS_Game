@@ -29,18 +29,16 @@ function game(playerSelection) {
     computerChoice = getComputerChoice();
     if ((computerChoice === "SCISSOR" && playerSelection === "PAPER") || (computerChoice === "PAPER" && playerSelection == "ROCK") || (computerChoice === "ROCK" && playerSelection === "SCISSOR")) {
         winner = "Computer " + computerChoice + " beats " + playerSelection + "!";
-        result = 1;
+        computerScore++;
     }
     else if (computerChoice === playerSelection) {
         winner = "Tie, computer chose " + computerChoice + " against your " + playerSelection;
-        result = 0;
     }
     else {
         winner = "Player " + playerSelection + " beats " + computerChoice + "!";
-        result = 2;
+        playerScore++;
     }
-    printResult (winner);
-    return result;
+    printResult (winner,"gameRound");
 }
 
 /**
@@ -49,8 +47,12 @@ function game(playerSelection) {
  * Parameters:  result - The result of the game 
  */
 
-function printResult(result){        
-    console.log(result);
+function printResult(result, contentType){        
+    const bod = document.querySelector('.content');
+    const div = document.createElement('div');
+    div.classList.add (contentType);
+    div.textContent = result;
+    bod.appendChild (div);
 }
 
 /**
@@ -60,7 +62,21 @@ function printResult(result){
  */
 
 function playerSelection(e) {
+    let winner;
+    if (playerScore < 5 && computerScore < 5){
+        console.log ("GAME START");
         game (e.target.id);
+    }
+    else{
+        console.log ("GAME END");
+        if (playerScore === 5){
+            winner = "Player"
+        }
+        else{
+            winner = "Computer"
+        }
+        printResult (`The game has ended, ${winner} has won!`,'gameResult');
+    }
 }
 
 /** defining event listeners */
@@ -71,4 +87,6 @@ buttons.forEach(function(e){
     e.addEventListener('click',playerSelection);
 });
 
+let playerScore = 0;
+let computerScore = 0;
 
