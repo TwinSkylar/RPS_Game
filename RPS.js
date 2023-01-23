@@ -1,3 +1,9 @@
+/**
+ * Name:  getComputerChoice
+ * Purpose:  Randomly selects rock, paper or scissors 
+ * Return:  ROCK, PAPER or SCISSORS
+ */
+
 function getComputerChoice() {
     let choice = Math.floor(Math.random() * 3 + 1);
     if (choice === 1) {
@@ -11,10 +17,17 @@ function getComputerChoice() {
     }
 }
 
-function playRound(playerSelection, computerChoice) {
+/**
+ * Name:  game
+ * Purpose:  Plays a single round of rock paper scissors
+ * Parameters:  playerSelection - A players choice of the three
+ * Return:  A numerical result of the game.  
+ */
+
+function game(playerSelection) {
     let winner;
     computerChoice = getComputerChoice();
-    if ((computerChoice === "SCISSOR" && playerSelection === "PAPER") || (computerChoice === "PAPER" && playerSelection == "ROCK")) {
+    if ((computerChoice === "SCISSOR" && playerSelection === "PAPER") || (computerChoice === "PAPER" && playerSelection == "ROCK") || (computerChoice === "ROCK" && playerSelection === "SCISSOR")) {
         winner = "Computer " + computerChoice + " beats " + playerSelection + "!";
         result = 1;
     }
@@ -26,46 +39,36 @@ function playRound(playerSelection, computerChoice) {
         winner = "Player " + playerSelection + " beats " + computerChoice + "!";
         result = 2;
     }
-    console.log(winner);
+    printResult (winner);
     return result;
 }
 
-function playerSelection() {
-    let selection = prompt("What do you choose").toLowerCase();
-    if (selection === "rock" || selection === "paper" || selection === "scissors") {
-        return selection.toUpperCase();
-    }
-    else {
-        console.log("Sorry, please try again with rock, paper or scissors");
-    }
+/**
+ * Name:  printResult
+ * Purpose:  Updates the website with the result of the game
+ * Parameters:  result - The result of the game 
+ */
+
+function printResult(result){        
+    console.log(result);
 }
 
-function game() {
-    let computerScore = 0;
-    let playerScore = 0;
-    let gameNumber = 0;
-    for (let i = 0; i < 5; i++) {
-        result = playRound(playerSelection(), getComputerChoice());
-        gameNumber++;
-        if (result === 2) {
-            playerScore++;
-        }
-        else if (result === 1) {
-            computerScore++;
-        }
-        console.log("Round " + gameNumber + ": Player: " + playerScore + "  Computer: " + computerScore);
-    }
-    if (computerScore === playerScore) {
-        console.log("The game has tied!");
-    }
-    else if (computerScore > playerScore) {
-        console.log("The computer has won!");
-    }
-    else {
-        console.log("The player has won!");
-    }
+/**
+ * Name:  playerSelection
+ * Purpose:  Plays a single round of rock paper scissors once a button is clicked
+ * Parameters:  e - The event from clicking a button 
+ */
 
+function playerSelection(e) {
+        game (e.target.id);
 }
 
-game();
+/** defining event listeners */
+
+/** Event listener for all the buttons on the webpage */
+const buttons = document.querySelectorAll(".btn");
+buttons.forEach(function(e){
+    e.addEventListener('click',playerSelection);
+});
+
 
