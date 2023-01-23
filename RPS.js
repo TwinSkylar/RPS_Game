@@ -21,7 +21,6 @@ function getComputerChoice() {
  * Name:  game
  * Purpose:  Plays a single round of rock paper scissors
  * Parameters:  playerSelection - A players choice of the three
- * Return:  A numerical result of the game.  
  */
 
 function game(playerSelection) {
@@ -44,7 +43,6 @@ function game(playerSelection) {
 /**
  * Name:  printResult
  * Purpose:  Updates the website with the result of the game
- * Parameters:  result - The result of the game 
  */
 
 function printResult(result, contentType){        
@@ -75,7 +73,9 @@ function playerSelection(e) {
         else{
             winner = "Computer"
         }
-        printResult (`The game has ended, ${winner} has won!`,'gameResult');
+        if (!document.querySelector('.gameResult')){
+            printResult (`The game has ended, ${winner} has won!`,'gameResult');
+        }
     }
 }
 
@@ -87,6 +87,6 @@ buttons.forEach(function(e){
     e.addEventListener('click',playerSelection);
 });
 
-let playerScore = 0;
-let computerScore = 0;
+let playerScore = 0; //Stores the player's score
+let computerScore = 0; // Stores the computer's score
 
